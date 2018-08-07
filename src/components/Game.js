@@ -15,54 +15,64 @@ class Game extends React.Component {
 
 		//Map is a 2d array with numbers representing tiles
 		let map = this.props.map;
+		console.log(map);
 		var playerPosition = { x: 0, y: 0 };
 
 		let viewHeight = window.innerHeight;
 		let viewWidth = window.innerWidth;
 
-		let visibleMapXLength = viewWidth / 64;
-		let visibleMapYLength = viewHeight / 64;
-		var visibleMapX, visibleMapY, visibleMap;
+		let visibleMapXLength = ((viewWidth - (viewWidth%64)) / 64);
+		let visibleMapYLength = ((viewHeight - (viewHeight%64)) / 64);
 
 		function calculateVisibleMapCoord() {
+			var visibleMapX, visibleMapY;
 			visibleMapX = 
 				(visibleMapXLength%2==0) 
 					? (playerPosition.x-visibleMapXLength/2)
 					: (playerPosition.x-(visibleMapXLength+1)/2);
+			//check for left/right side visibleMap to total map limit
+			if (map) {
+				if ((playerPosition.x+(visibleMapXLength/2))>=map[0].length) {
+					visibleMapX = map[0].length - visibleMapXLength;
+				}
+			}
 			if (visibleMapX<0) {
 				visibleMapX = 0;
-			}
-			//check for right side visibleMap to total map limit
-			if ((playerPosition.x+(visibleMapXLength/2))>=map[0].length) {
-				visibleMapX = map[0].length - visibleMapXLength;
 			}
 
 			visibleMapY = 
 				(visibleMapYLength%2==0) 
 					? (playerPosition.y-visibleMapYLength/2)
 					: (playerPosition.y-(visibleMapYLength+1)/2);
-			if (visibleMapY<0) {
-				visibleMapY = 0;
-			}
-			//check for bottom visibleMap to total map limit
+			console.log(visibleMapY);
+			//check for top/bottom visibleMap to total map limit
 			if ((playerPosition.y+(visibleMapYLength/2))>=map.length) {
 				visibleMapY = map.length - visibleMapYLength;
 			}
+			if (visibleMapY<0) {
+				visibleMapY = 0;
+			}
+			return {x: visibleMapX, y: visibleMapY};
 		};
-		calculateVisibleMapCoord();
+		let visibleMapCoord = calculateVisibleMapCoord();
 
 		function createVisibleMap() {
+			var visibleMap = [[]];
 			var k=0;
-			for (var y = visibleMapY; y<(visibleMapY+visibleMapYLength); y++) {
+			for (var y = visibleMapCoord.y; y<(visibleMapCoord.y+visibleMapYLength); y++) {
 				var i=0;
-				for (var x = visibleMapX; x<(visibleMapX+visibleMapXLength); x++) {
+				for (var x = visibleMapCoord.x; x<(visibleMapCoord.x+visibleMapXLength); x++) {
+					if (!visibleMap[k]) {
+						visibleMap[k] = [];
+					}
 					visibleMap[k][i] = map[y][x];
 					i++;
 				}
 				k++;
 			};
+			return visibleMap;
 		};
-		createVisibleMap();
+		let visibleMap = createVisibleMap();
 
 		let containerStyle = {
 			marginLeft: (viewWidth%64)/2,
@@ -73,10 +83,23 @@ class Game extends React.Component {
 
 		/*
 		MAP KEY:
-		
+
 		*/
 
-		let defaultMap = [["my map"]];
+		let defaultMap = [	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+						];
 
 		let screen = {
 			map: defaultMap
