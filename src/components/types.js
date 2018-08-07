@@ -1,0 +1,1 @@
+export const SET_SCREEN_SUCCESS = "SET_SCREEN_SUCCESS";
