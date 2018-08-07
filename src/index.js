@@ -9,13 +9,8 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import rootReducer from './rootReducer';
 
-const preloadedState = {
-	screen: {
-		map: ['Map Default']
-	}
-};
 
-const store = createStore(rootReducer,preloadedState, composeWithDevTools(applyMiddleware(thunk)));
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 
 ReactDOM.render(
 	<BrowserRouter>
