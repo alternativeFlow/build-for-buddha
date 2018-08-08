@@ -6,6 +6,16 @@ import {defaultMap} from '../Utils/Game';
 
 import {setScreen} from './actions/screen';
 
+/*
+	Some ideas for features (not yet implemented):
+		-Wildcard, random (set?) resource, trait, ect for each player
+			-ie faster walk speed, fireball, turn resources into others, extra turret, ect.
+		-NPC/Monster collision results in battle/health loss/ect. dynamic and random interaction
+			-Can make ghosts? make a monster team?
+			
+	Feel free to add to this section.
+*/
+
 
 class Game extends React.Component {
 
@@ -18,14 +28,43 @@ class Game extends React.Component {
 			-based on total map coords, manually decide starting positions
 		-Decide inventory
 		-Decide player model in general, ie what data is associated with the player
+		-Unit graphical assets found at src/assets/2DGameAssets/CharacterArt for reference
 	*/
 	loadPlayer = () => {
 
 	};
 
 	/* NEEDS TO BE DONE
+		-Load a monster/animal overlay(randomly generated/determined by resource location ie guarding?) 
+			-Assets need to be found, some can be found at src/2DGameAssets/AnimalArt or /CharacterArt
+			-mapping of monsters to numbers needs to be made for monster/animal overlay
+				-careful, things might have to be added/removed
+	*/
+
+	loadMonsterOverlay = () => {
+
+	};
+
+	/* NEEDS TO BE DONE
+		-Load an NPC overlay
+			-Assets need to be found, some at src/2DGameAssets/.....
+			-mapping of NPC to numbers needs to be made for NPC overlay
+	*/
+
+	loadNPCOverlay = () => {
+
+	};
+
+	/* NEEDS TO BE DONE
 		-Load a (randomly generated?) environment overlay containing
 			-ie. gold ore to mine, trees to chop, berries to pick for health, ect.
+			-environment assets found at src/assets/2DGameAssets/PNG/Default size/Environment
+				-will need to be mapped to numbers and placed in a 2d array
+					-Careful, things might have to be added/removed
+					-Make very general
+			-Once mapped, need to determine visible environment overlay
+				-same area on total map as the visible tile map in loadMap function
+				-could be it's own function
 	*/
 	loadEnvironmentOverlay = () => {
 
@@ -112,6 +151,7 @@ class Game extends React.Component {
 			MAP NEEDS TO BE BUILT. MAP KEY NEEDS TO BE BUILT.
 			SEE build-for-buddha/src/assets/2DGameAssets for tiles to map.
 			SEE build-for-buddha/src/Utils/Game.js for Map. Size should be changed.
+			CAREFUL, NEEDS TO BE THOUGHT OUT AS KEYS MIGHT BE ADDED/REMOVED
 		*/
 
 		let screen = {
