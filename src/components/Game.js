@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import {defaultMap} from '../Utils/Game';
+
 import {setScreen} from './actions/screen';
 
 
@@ -11,8 +13,29 @@ class Game extends React.Component {
 		this.loadMap();
 	}
 
-	loadMap = () => {
+	/* NEEDS TO BE DONE
+		-Decide starting position
+			-based on total map coords, manually decide starting positions
+		-Decide inventory
+		-Decide player model in general, ie what data is associated with the player
+	*/
+	loadPlayer = () => {
 
+	};
+
+	/* NEEDS TO BE DONE
+		-Load a (randomly generated?) environment overlay containing
+			-ie. gold ore to mine, trees to chop, berries to pick for health, ect.
+	*/
+	loadEnvironmentOverlay = () => {
+
+	};
+
+	/* IN PROGRESS
+		-Load the tiles of the map which do not contain interactable parts
+			-except for water and trees
+	*/
+	loadMap = () => {
 		//Map is a 2d array with numbers representing tiles
 		let map = this.props.map;
 		console.log(map);
@@ -54,17 +77,20 @@ class Game extends React.Component {
 			}
 			return {x: visibleMapX, y: visibleMapY};
 		};
-		let visibleMapCoord = calculateVisibleMapCoord();
 
 		function createVisibleMap() {
+			let visibleMapCoord = calculateVisibleMapCoord();
 			var visibleMap = [[]];
+
 			var k=0;
 			for (var y = visibleMapCoord.y; y<(visibleMapCoord.y+visibleMapYLength); y++) {
 				var i=0;
 				for (var x = visibleMapCoord.x; x<(visibleMapCoord.x+visibleMapXLength); x++) {
+					//check for undefined values, init if undefined
 					if (!visibleMap[k]) {
 						visibleMap[k] = [];
 					}
+					//mapping values onto return value
 					visibleMap[k][i] = map[y][x];
 					i++;
 				}
@@ -83,23 +109,10 @@ class Game extends React.Component {
 
 		/*
 		MAP KEY:
-
+			MAP NEEDS TO BE BUILT. MAP KEY NEEDS TO BE BUILT.
+			SEE build-for-buddha/src/assets/2DGameAssets for tiles to map.
+			SEE build-for-buddha/src/Utils/Game.js for Map. Size should be changed.
 		*/
-
-		let defaultMap = [	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-							[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-						];
 
 		let screen = {
 			map: defaultMap
